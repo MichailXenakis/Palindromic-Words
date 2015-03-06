@@ -17,8 +17,8 @@ loop:
         # end of loop here
 
         addiu      $s2, $s2,  -1     # Adjust $s2 to point to last char
-
         ########################################################################
+        la         $a0, 0
 loop1:	
 	slt	   $t0,	$s2, $s1		#s2<s1	
 	lbu        $t1, 0($s1)
@@ -27,17 +27,15 @@ loop1:
 	bne	   $t0,	$zero, exit
 	addiu      $s2, $s2, -1
 	addiu      $s1, $s1, +1
-	la         $a0, 0
-	addiu      $v0, $zero, 1
 	beq        $t0, $zero, loop1
 	
 no:      
         la         $a0, 1
-        addiu      $v0, $zero, 1
         ########################################################################
 
         
 exit: 
+	addiu      $v0, $zero, 1
 	syscall
         addiu      $v0, $zero, 10    # system service 10 is exit
         syscall                      # we are outta here.
